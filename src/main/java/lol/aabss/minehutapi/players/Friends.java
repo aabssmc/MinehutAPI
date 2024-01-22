@@ -32,7 +32,7 @@ public class Friends {
                 JSONObject friendObject = friendsArray.getJSONObject(i);
                 String id = friendObject.getString("uuid");
                 String name = friendObject.getString("name");
-                String rank = friendObject.getString("rank");
+                MinehutPlayer.Rank rank = MinehutPlayer.Rank.valueOf(friendObject.getString("rank"));
                 boolean is = friendObject.getBoolean("online");
                 MinehutPlayer friend = new MinehutPlayer(id, name, rank, is);
                 friends.add(friend);

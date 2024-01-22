@@ -4,7 +4,7 @@ public class MinehutPlayer {
 
     private String uuid;
     private String name;
-    private String rank;
+    private Rank rank;
     private boolean online;
 
     /**
@@ -13,7 +13,7 @@ public class MinehutPlayer {
      * @param rank The rank of the player.
      * @param online The online state of the player.
      */
-    public MinehutPlayer(String uuid, String name, String rank, boolean online){
+    public MinehutPlayer(String uuid, String name, Rank rank, boolean online){
         this.uuid = uuid;
         this.name = name;
         this.rank = rank;
@@ -37,7 +37,7 @@ public class MinehutPlayer {
     /**
      * @return The rank of the player.
      */
-    public String getRank(){
+    public Rank getRank(){
         return rank;
     }
 
@@ -50,6 +50,20 @@ public class MinehutPlayer {
 
     public String toString(){
         return getRank() + " " + getName();
+
+    }
+
+    public enum Rank{
+
+        DEFAULT,
+        VIP,
+        VIP_PLUS,
+        PRO,
+        LEGEND,
+        PATRON,
+        SUPER_HELPER,
+        ADMIN;
+
     }
 
 }

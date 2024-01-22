@@ -32,26 +32,26 @@ public class Server {
      * @return All the categories.
      */
     @Nullable
-    public String[] getCategories(){
+    public List<String> getCategories(){
         JSONArray array = json.getJSONObject("server").getJSONArray("categories");
         List<String> categories = new ArrayList<>();
         for (Object id : array.toList()){
             categories.add((String) id);
         }
-        return categories.toArray(String[]::new);
+        return categories;
     }
 
     /**
      * @return All the purchased icons.
      */
     @Nullable
-    public String[] getPurchasedIcons(){
+    public List<String> getPurchasedIcons(){
         JSONArray array = json.getJSONObject("server").getJSONArray("purchased_icons");
         List<String> icons = new ArrayList<>();
         for (Object id : array.toList()){
             icons.add((String) id);
         }
-        return icons.toArray(String[]::new);
+        return icons;
     }
 
     /**
@@ -95,13 +95,13 @@ public class Server {
      * @return All the connected servers.
      */
     @Nullable
-    public Server[] getConnectedServers(){
+    public List<Server> getConnectedServers(){
         JSONArray array = json.getJSONObject("server").getJSONArray("connectedServers");
         List<Server> servers = new ArrayList<>();
         for (Object id : array.toList()){
             servers.add(Servers.getServer((String) id));
         }
-        return servers.toArray(Server[]::new);
+        return servers;
     }
 
     /**
