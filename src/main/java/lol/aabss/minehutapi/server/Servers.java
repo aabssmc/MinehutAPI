@@ -11,14 +11,15 @@ import static lol.aabss.minehutapi.MinehutAPI.request;
 
 public class Servers {
 
-    /**
-     * @return All of the online minehut servers.
-     */
+    private static String url = "https://api.minehut.com/";
 
+    /**
+     * @return All the online minehut servers.
+     */
     // WARNING! This is a high usage method and may cause large amounts of lag.
     @Nullable
-    public static Server[] getServers() {
-        String response = request("servers");
+    public static List<Server> getServers() {
+        String response = request(url, "servers");
         if (response != null) {
             JSONObject json = new JSONObject(response);
             JSONArray serversArray = json.getJSONArray("servers");
@@ -28,7 +29,7 @@ public class Servers {
                 String serverId = staticInfo.getString("_id");
                 servers.add(getServer(serverId));
             }
-            return servers.toArray(Server[]::new);
+            return servers;
         }
         System.out.println("An unknown error occurred! Minehut servers are down?");
         return null;
@@ -36,28 +37,38 @@ public class Servers {
 
 
     /**
-     * @return The specified server from the ID.
+     * @return The specified server from the id or name.
      */
     @Nullable
-    public static Server getServer(String ID){
-        String response = request("server/" + ID);
+    public static Server getServer(String IdOrName){
+        String response = request(url,"server/" + IdOrName + (IdOrName.length() <= 16 ? "?byName=true" : ""));
         if (response != null) {
             return new Server(new JSONObject(response));
         }
         System.out.println("An unknown error occurred! Minehut servers are down?");
         return null;
     }
-    /**
-     * @return The specified server from the name.
-     */
 
+    /**
+     * @return All the top minehut servers.
+     */
+    // WARNING! This is a high usage method and may cause large amounts of lag.
     @Nullable
-    public static Server getServerByName(String name){
-        String response = request("server/" + name + "?byName=true");
+    public static List<Server> getTopServers() {
+        String response = request(url,"network/top_servers");
         if (response != null) {
-            return new Server(new JSONObject(response));
+            JSONObject json = new JSONObject(response);
+            JSONArray serversArray = json.getJSONArray("servers");
+            List<Server> servers = new ArrayList<>();
+            for (int i = 0; i < serversArray.length(); i++) {
+                JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
+                String serverId = staticInfo.getString("_id");
+                servers.add(getServer(serverId));
+            }
+            return servers;
         }
         System.out.println("An unknown error occurred! Minehut servers are down?");
         return null;
     }
+
 }
