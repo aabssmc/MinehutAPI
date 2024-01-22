@@ -14,21 +14,26 @@ public class Servers {
     /**
      * @return All of the online minehut servers.
      */
+
+    // WARNING! This is a high usage method and may cause large amounts of lag.
     @Nullable
-    public static Server[] getServers(){
+    public static Server[] getServers() {
         String response = request("servers");
         if (response != null) {
             JSONObject json = new JSONObject(response);
-            JSONArray servers = json.getJSONArray("servers");
-            List<Server> serverList = new ArrayList<>();
-            for (Object obj : servers.toList()) {
-                serverList.add(getServer(((JSONObject) obj).getString("servers.staticInfo._id")));
+            JSONArray serversArray = json.getJSONArray("servers");
+            List<Server> servers = new ArrayList<>();
+            for (int i = 0; i < serversArray.length(); i++) {
+                JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
+                String serverId = staticInfo.getString("_id");
+                servers.add(getServer(serverId));
             }
-            return serverList.toArray(Server[]::new);
+            return servers.toArray(Server[]::new);
         }
         System.out.println("An unknown error occurred! Minehut servers are down?");
         return null;
     }
+
 
     /**
      * @return The specified server from the ID.
