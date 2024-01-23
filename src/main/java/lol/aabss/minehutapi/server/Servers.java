@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static lol.aabss.minehutapi.MinehutAPI.request;
 
@@ -69,6 +70,11 @@ public class Servers {
         }
         System.out.println("An unknown error occurred! Minehut servers are down?");
         return null;
+    }
+
+    public static boolean isAvailable(String name){
+        String response = request(url, "server/"+name+"?byName=true");
+        return Objects.equals(response, "{\"ok\":false,\"msg\":\"An unknown error occured\"}");
     }
 
 }
