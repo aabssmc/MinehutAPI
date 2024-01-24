@@ -12,7 +12,7 @@ import static lol.aabss.minehutapi.MinehutAPI.request;
 
 public class Servers {
 
-    private static String url = "https://api.minehut.com/";
+    private static final String url = "https://api.minehut.com/";
 
     /**
      * @return All the online minehut servers.

@@ -1,11 +1,19 @@
 package lol.aabss.minehutapi.players;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static lol.aabss.minehutapi.MinehutAPI.request;
+
 public class MinehutPlayer {
 
-    private String uuid;
-    private String name;
-    private Rank rank;
-    private boolean online;
+    private final String uuid;
+    private final String name;
+    private final Rank rank;
+    private final boolean online;
 
     /**
      * @param uuid The UUID of the player.
@@ -39,6 +47,26 @@ public class MinehutPlayer {
      */
     public Rank getRank(){
         return rank;
+    }
+
+    public List<MinehutPlayer> getFriends(){
+        String response = request("https://api.minehut.com/", "network/player/" + uuid + "/friends");
+        if (response != null) {
+            JSONObject jsonResponse = new JSONObject(response);
+            JSONArray friendsArray = jsonResponse.getJSONArray("friends");
+            List<MinehutPlayer> friends = new ArrayList<>();
+            for (int i = 0; i < friendsArray.length(); i++) {
+                JSONObject friendObject = friendsArray.getJSONObject(i);
+                String id = friendObject.getString("uuid");
+                String name = friendObject.getString("name");
+                MinehutPlayer.Rank rank = MinehutPlayer.Rank.valueOf(friendObject.getString("rank"));
+                boolean is = friendObject.getBoolean("online");
+                MinehutPlayer friend = new MinehutPlayer(id, name, rank, is);
+                friends.add(friend);
+            }
+            return friends;
+        }
+        return null;
     }
 
     /**
