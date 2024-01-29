@@ -3,99 +3,59 @@ package lol.aabss.minehutapi.players;
 import org.json.JSONObject;
 
 import static lol.aabss.minehutapi.MinehutAPI.request;
+import static lol.aabss.minehutapi.MinehutAPI.simple;
 
 public class Players {
 
-    private static String url = "https://api.minehut.com/";
+    private static final String url = "https://api.minehut.com/";
+    public static final JSONObject distribution = new JSONObject(request(url, "network/players/distribution"));
 
     /**
      * @return Gets the total amount of players across the whole network.
      */
     public static int getOnlinePlayerCount(){
-        String servers = request(url,"network/simple_stats");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("player_count");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return simple.getInt("player_count");
     }
 
     /**
      * @return Gets the total amount of bedrock players across the whole network.
      */
     public static int getBedrockTotal(){
-        String servers = request(url,"network/players/distribution");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("bedrockTotal");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return distribution.getInt("bedrockTotal");
     }
 
     /**
      * @return Gets the total amount of java players across the whole network.
      */
     public static int getJavaTotal(){
-        String servers = request(url,"network/players/distribution");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("javaTotal");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return distribution.getInt("javaTotal");
     }
 
     /**
      * @return Gets the total amount of bedrock players in the lobby.
      */
     public static int getBedrockLobby(){
-        String servers = request(url,"network/players/distribution");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("bedrockLobby");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return distribution.getInt("bedrockLobby");
     }
 
     /**
      * @return Gets the total amount of bedrock players in servers.
      */
     public static int getBedrockPlayerServer(){
-        String servers = request(url,"network/players/distribution");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("bedrockPlayerServer");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return distribution.getInt("bedrockPlayerServer");
     }
 
     /**
      * @return Gets the total amount of java players in the lobby.
      */
     public static int getJavaLobby(){
-        String servers = request(url,"network/players/distribution");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("javaLobby");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return distribution.getInt("javaLobby");
     }
 
     /**
      * @return Gets the total amount of java players in servers.
      */
     public static int getJavaPlayerServer(){
-        String servers = request(url,"network/players/distribution");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("javaPlayerServer");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return distribution.getInt("javaPlayerServer");
     }
 }

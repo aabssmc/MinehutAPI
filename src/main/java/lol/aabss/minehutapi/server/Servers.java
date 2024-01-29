@@ -21,19 +21,15 @@ public class Servers {
     @Nullable
     public static List<Server> getServers() {
         String response = request(url, "servers");
-        if (response != null) {
-            JSONObject json = new JSONObject(response);
-            JSONArray serversArray = json.getJSONArray("servers");
-            List<Server> servers = new ArrayList<>();
-            for (int i = 0; i < serversArray.length(); i++) {
-                JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
-                String serverId = staticInfo.getString("_id");
-                servers.add(getServer(serverId));
-            }
-            return servers;
+        JSONObject json = new JSONObject(response);
+        JSONArray serversArray = json.getJSONArray("servers");
+        List<Server> servers = new ArrayList<>();
+        for (int i = 0; i < serversArray.length(); i++) {
+            JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
+            String serverId = staticInfo.getString("_id");
+            servers.add(getServer(serverId));
         }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return null;
+        return servers;
     }
 
 
@@ -43,11 +39,7 @@ public class Servers {
     @Nullable
     public static Server getServer(String IdOrName){
         String response = request(url,"server/" + IdOrName + (IdOrName.length() <= 16 ? "?byName=true" : ""));
-        if (response != null) {
-            return new Server(new JSONObject(response));
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return null;
+        return new Server(new JSONObject(response));
     }
 
     /**
@@ -57,19 +49,15 @@ public class Servers {
     @Nullable
     public static List<Server> getTopServers() {
         String response = request(url,"network/top_servers");
-        if (response != null) {
-            JSONObject json = new JSONObject(response);
-            JSONArray serversArray = json.getJSONArray("servers");
-            List<Server> servers = new ArrayList<>();
-            for (int i = 0; i < serversArray.length(); i++) {
-                JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
-                String serverId = staticInfo.getString("_id");
-                servers.add(getServer(serverId));
-            }
-            return servers;
+        JSONObject json = new JSONObject(response);
+        JSONArray serversArray = json.getJSONArray("servers");
+        List<Server> servers = new ArrayList<>();
+        for (int i = 0; i < serversArray.length(); i++) {
+            JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
+            String serverId = staticInfo.getString("_id");
+            servers.add(getServer(serverId));
         }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return null;
+        return servers;
     }
 
     public static boolean isAvailable(String name){

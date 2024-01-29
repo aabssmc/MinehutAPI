@@ -14,6 +14,8 @@ public class MinehutAPI {
      * The api url.
      */
     private static final String url = "https://api.minehut.com/";
+    public static final JSONObject simple = new JSONObject(request(url, "network/simple_stats"));
+    public static final JSONObject homepage = new JSONObject(request(url, "network/homepage_stats"));
 
     /**
      * @param endpoint The api endpoint (ex: servers)
@@ -32,6 +34,7 @@ public class MinehutAPI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("An unknown error occurred! Minehut servers are down?");
         return null;
     }
 
@@ -39,64 +42,34 @@ public class MinehutAPI {
      * @return Gets the online server count.
      */
     public static int getOnlineServerCount(){
-        String servers = request(url, "network/simple_stats");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("server_count");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return simple.getInt("server_count");
     }
 
     /**
      * @return Gets the ram count.
      */
     public static int getRamCount(){
-        String servers = request(url,"network/simple_stats");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("ram_count");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return simple.getInt("ram_count");
     }
 
     /**
      * @return Gets the max amount of the ram.
      */
     public static int getRamMax(){
-        String servers = request(url,"network/simple_stats");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("ram_max");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return simple.getInt("ram_max");
     }
 
     /**
      * @return Gets the amount of all servers registered.
      */
     public static int getServerCount(){
-        String servers = request(url,"network/homepage_stats");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("server_count");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return homepage.getInt("server_count");
     }
 
     /**
      * @return Gets the amount of all users registered.
      */
     public static int getUserCount(){
-        String servers = request(url,"network/homepage_stats");
-        if (servers != null) {
-            JSONObject json = new JSONObject(servers);
-            return json.getInt("user_count");
-        }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return 0;
+        return homepage.getInt("user_count");
     }
 }
