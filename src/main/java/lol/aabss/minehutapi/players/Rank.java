@@ -29,92 +29,121 @@ public enum Rank {
     VIP(19),
     DEFAULT(20);
 
-    private JSONArray json;
-    private Integer index;
+    private JSONObject rank;
 
     Rank(Integer index) {
-        this.index = index;
         String req = request("https://api.minehut.com/", "network/ranks");
         if (req != null) {
-            json = new JSONArray(req);
+            rank = new JSONArray(req).getJSONObject(index);
         }
         else{
             System.out.println("An unknown error occurred! Minehut servers are down?");
         }
     }
 
-    public JSONObject test(){
-        return json.getJSONObject(index);
-    }
-
+    /**
+     * @return Returns the id of the rank.
+     */
     public String getId(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("id");
     }
 
+    /**
+     * @return Returns the name of the rank.
+     */
     public String getName(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("name");
     }
 
+    /**
+     * @return Returns the ordinal of the rank.
+     */
     public int getOrdinal(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getInt("ordinal");
     }
 
+    /**
+     * @return Returns the color of the rank.
+     */
     public String getColor(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("color");
     }
 
+    /**
+     * @return Returns the chat color of the rank.
+     */
     public String getChatColor(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("chatColor");
     }
 
+    /**
+     * @return Returns the prefix color of the rank.
+     */
     public String getPrefixColor(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("prefixColor");
     }
 
+    /**
+     * @return Returns the prefix of the rank.
+     */
     public String getPrefix(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("prefix");
     }
 
+    /**
+     * @return Returns the legacy prefix of the rank.
+     */
     public String getPrefixLegacy(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("prefixLegacy");
     }
 
+    /**
+     * @return Returns the mini message prefix of the rank.
+     */
     public String getPrefixMini(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getString("prefixMini");
     }
 
+    /**
+     * @return Returns true if the rank is a staff rank.
+     */
     public boolean isStaff(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getBoolean("staff");
     }
 
+    /**
+     * @return Returns the chat delay seconds of the rank.
+     */
     public int getChatDelaySeconds(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getInt("chatDelaySeconds");
     }
 
+    /**
+     * @return Returns the rate limit between each ad of the rank.
+     */
     public int getAdRateLimit(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getInt("adRateLimit");
     }
 
+    /**
+     * @return Returns the limit of each ad each month of the rank.
+     */
     public int getAdMonthlyLimit(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getInt("adMonthlyLimit");
     }
 
+    /**
+     * @return Returns true if the rank can be subscribed to.
+     */
     public boolean isSubscription(){
-        JSONObject rank = json.getJSONObject(index);
         return rank.getBoolean("subscription");
+    }
+
+    /**
+     * @return Returns the rank as a string.
+     */
+    public String toString(){
+        return getPrefix() + " " + getName();
     }
 
 }
