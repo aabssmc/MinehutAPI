@@ -1,4 +1,4 @@
-package lol.aabss.minehutapi.server;
+package com.github.aabssmc.minehutapi.server;
 
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static lol.aabss.minehutapi.MinehutAPI.request;
+import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
 public class Servers {
 

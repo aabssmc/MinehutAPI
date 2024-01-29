@@ -1,4 +1,4 @@
-package lol.aabss.minehutapi.server;
+package com.github.aabssmc.minehutapi.server;
 
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;

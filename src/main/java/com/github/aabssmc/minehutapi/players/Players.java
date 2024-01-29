@@ -1,8 +1,8 @@
-package lol.aabss.minehutapi.players;
+package com.github.aabssmc.minehutapi.players;
 
 import org.json.JSONObject;
 
-import static lol.aabss.minehutapi.MinehutAPI.request;
+import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
 public class Players {
 

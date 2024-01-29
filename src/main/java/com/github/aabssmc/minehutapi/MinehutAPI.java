@@ -1,7 +1,7 @@
 
 // phew!!!!
 
-package lol.aabss.minehutapi;
+package com.github.aabssmc.minehutapi;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

@@ -1,4 +1,4 @@
-package lol.aabss.minehutapi.players;
+package com.github.aabssmc.minehutapi.players;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lol.aabss.minehutapi.MinehutAPI.request;
+import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
 public class MinehutPlayer {
 
