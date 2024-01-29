@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import static lol.aabss.minehutapi.MinehutAPI.request;
+import static lol.aabss.minehutapi.players.Friends.formatUUID;
 
 public enum Rank {
 
@@ -39,6 +40,19 @@ public enum Rank {
         else{
             System.out.println("An unknown error occurred! Minehut servers are down?");
         }
+    }
+
+    public static Rank getRank(String NameOrUUID){
+        String uuid = "";
+        if (NameOrUUID.length() <= 16) {
+            uuid = formatUUID(request("https://mcapi.aabss.lol/uuid/", NameOrUUID));
+        } else {
+            if (!NameOrUUID.contains("-")) {
+                uuid = formatUUID(NameOrUUID);
+            }
+        }
+        JSONObject json = new JSONObject(request("https://api.minehut.com/cosmetics/profile/", uuid));
+        return valueOf(json.getString("rank"));
     }
 
     /**
