@@ -30,16 +30,11 @@ public enum Rank {
     VIP(19),
     DEFAULT(20);
 
-    private JSONObject rank;
+    private final JSONObject rank;
 
     Rank(Integer index) {
         String req = request("https://api.minehut.com/", "network/ranks");
-        if (req != null) {
-            rank = new JSONArray(req).getJSONObject(index);
-        }
-        else{
-            System.out.println("An unknown error occurred! Minehut servers are down?");
-        }
+        rank = new JSONArray(req).getJSONObject(index);
     }
 
     public static Rank getRank(String NameOrUUID){
