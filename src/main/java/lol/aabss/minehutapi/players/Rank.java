@@ -143,7 +143,7 @@ public enum Rank {
      * @return Returns the rank as a string.
      */
     public String toString(){
-        return getPrefix() + " " + getName();
+        return getName();
     }
 
 }
