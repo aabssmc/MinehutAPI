@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.aabssmc:MinehutAPI:1.0.4'
+    implementation 'com.github.aabssmc:MinehutAPI:1.0.5'
 }
 ```
 
@@ -26,7 +26,7 @@ Maven:
     <dependency>
       <groupId>com.github.aabssmc</groupId>
       <artifactId>MinehutAPI</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5</version>
     </dependency>
   </dependencies>
 
