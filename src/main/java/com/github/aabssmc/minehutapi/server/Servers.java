@@ -1,5 +1,6 @@
 package com.github.aabssmc.minehutapi.server;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +19,6 @@ public class Servers {
      * @return All the online minehut servers.
      */
     // WARNING! This is a high usage method and may cause large amounts of lag.
-    @Nullable
     public static List<Server> getServers() {
         String response = request(url, "servers");
         JSONObject json = new JSONObject(response);
@@ -36,7 +36,6 @@ public class Servers {
     /**
      * @return The specified server from the id or name.
      */
-    @Nullable
     public static Server getServer(String IdOrName){
         String response = request(url,"server/" + IdOrName + (IdOrName.length() <= 16 ? "?byName=true" : ""));
         return new Server(new JSONObject(response));
@@ -46,7 +45,7 @@ public class Servers {
      * @return All the top minehut servers.
      */
     // WARNING! This is a high usage method and may cause large amounts of lag.
-    @Nullable
+    @NotNull
     public static List<Server> getTopServers() {
         String response = request(url,"network/top_servers");
         JSONObject json = new JSONObject(response);

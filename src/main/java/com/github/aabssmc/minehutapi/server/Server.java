@@ -45,11 +45,11 @@ public class Server {
      * @return All the purchased icons.
      */
     @Nullable
-    public List<String> getPurchasedIcons(){
+    public List<Icon> getPurchasedIcons(){
         JSONArray array = json.getJSONArray("purchased_icons");
-        List<String> icons = new ArrayList<>();
+        List<Icon> icons = new ArrayList<>();
         for (Object id : array.toList()){
-            icons.add((String) id);
+            icons.add(Icon.getIcon((String) id));
         }
         return icons;
     }
@@ -144,6 +144,20 @@ public class Server {
     }
 
     /**
+     * @return The server's default banner image.
+     */
+    public String getDefaultBannerImage(){
+        return json.getString("default_banner_image");
+    }
+
+    /**
+     * @return The server's default banner glint.
+     */
+    public String getDefaultBannerTint(){
+        return json.getString("default_banner_tint");
+    }
+
+    /**
      * @return The Minecraft UUID of the owner.
      */
     public String getOwner(){
@@ -163,6 +177,14 @@ public class Server {
     public long getCreation(){
         return json.getLong("creation");
     }
+
+    /**
+     * @return The date the server was created in unix timestamp.
+     */
+    public String getPlatform(){
+        return json.getString("platform");
+    }
+
 
     /**
      * @return The amount of credits that are used for the server each day.
@@ -186,27 +208,6 @@ public class Server {
     }
 
     /**
-     * @return The server's currently used icon.
-     */
-    public String getActiveIcon(){
-        return json.getString("active_icon");
-    }
-
-    /**
-     * @return The server's default banner image.
-     */
-    public String getDefaultBannerImage(){
-        return json.getString("default_banner_image");
-    }
-
-    /**
-     * @return The server's default banner glint.
-     */
-    public String getDefaultBannerTint(){
-        return json.getString("default_banner_tint");
-    }
-
-    /**
      * @return If the server has expired.
      */
     public boolean isExpired(){
@@ -220,12 +221,6 @@ public class Server {
         return json.getInt("joins");
     }
 
-    /**
-     * @return The server's current icon.
-     */
-    public String getIcon(){
-        return json.getString("icon");
-    }
 
     /**
      * @return If the server is online.

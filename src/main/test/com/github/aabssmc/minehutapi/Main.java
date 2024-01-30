@@ -1,14 +1,19 @@
-package lol.aabss.minehutapi;
+package com.github.aabssmc.minehutapi;
 
-import lol.aabss.minehutapi.players.Friends;
-import lol.aabss.minehutapi.players.MinehutPlayer;
-import lol.aabss.minehutapi.players.Players;
-import lol.aabss.minehutapi.server.Servers;
+import com.github.aabssmc.minehutapi.players.Friends;
+import com.github.aabssmc.minehutapi.players.Friends;
+import com.github.aabssmc.minehutapi.players.MinehutPlayer;
+import com.github.aabssmc.minehutapi.players.Players;
+import com.github.aabssmc.minehutapi.server.Icon;
+import com.github.aabssmc.minehutapi.server.Servers;
+
+import static com.github.aabssmc.minehutapi.server.Icon.getIcon;
+import static com.github.aabssmc.minehutapi.server.Servers.getServer;
 
 public class Main {
     public static void main(String[] args) {
-        for (MinehutPlayer p : Friends.getFriends("aabss")){
-            System.out.println(p);
-        }
+        System.out.println("start");
+        System.out.println(getServer("Comic").getIcon().getCreated());
+        System.out.println("end");
     }
 }
