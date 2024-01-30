@@ -8,6 +8,7 @@ import java.util.List;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+@SuppressWarnings("unused")
 public class MinehutPlayer {
 
     private final String uuid;

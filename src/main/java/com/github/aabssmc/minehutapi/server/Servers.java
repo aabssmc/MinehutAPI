@@ -11,6 +11,7 @@ import java.util.Objects;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+@SuppressWarnings("unused")
 public class Servers {
 
     private static final String url = "https://api.minehut.com/";

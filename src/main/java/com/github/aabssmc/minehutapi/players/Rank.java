@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 import static com.github.aabssmc.minehutapi.players.Friends.formatUUID;
 
+@SuppressWarnings("unused")
 public enum Rank {
 
     ADMIN(0),

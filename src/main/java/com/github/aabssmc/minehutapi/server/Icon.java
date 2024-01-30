@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+@SuppressWarnings("unused")
 public enum Icon {
         SUNFLOWER("6172e1f9ba3e7c00755da4de"),
         REDSTONE_BLOCK("5eb9c16826c96b1e13b1bc60"),

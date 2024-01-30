@@ -8,6 +8,7 @@ import java.util.List;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+@SuppressWarnings("unused")
 public class Friends {
 
     private static String url = "https://api.minehut.com/";

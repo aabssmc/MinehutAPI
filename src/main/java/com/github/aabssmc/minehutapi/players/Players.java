@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+@SuppressWarnings("unused")
 public class Players {
 
     private static final String url = "https://api.minehut.com/";

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+@SuppressWarnings("unused")
 public class MinehutAPI {
     /**
      * The api url.
