@@ -473,15 +473,15 @@ public enum Icon {
     /**
      * @return Returns the display name of the icon.
      */
-    public long getDisplayName(){
-        return icon.getLong("display_name");
+    public String getDisplayName(){
+        return icon.getString("display_name");
     }
 
     /**
      * @return Returns the icon name of the icon.
      */
-    public long getIconName(){
-        return icon.getLong("icon_name");
+    public String getIconName(){
+        return icon.getString("icon_name");
     }
 
     /**
