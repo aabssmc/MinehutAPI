@@ -20,7 +20,8 @@ public class MinehutAPI {
     private static final String url = "https://api.minehut.com/";
 
     /**
-     * @param endpoint The api endpoint (ex: servers)
+     * @param url The main url.
+     * @param endpoint The api endpoint (ex: servers).
      * @return The response body as a string.
      */
     @Nullable

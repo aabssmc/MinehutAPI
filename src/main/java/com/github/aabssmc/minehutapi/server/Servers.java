@@ -60,6 +60,10 @@ public class Servers {
         return servers;
     }
 
+    /**
+     * @param name The name of the server.
+     * @return Returns true if the name of the server is available.
+     */
     public static boolean isAvailable(String name){
         String response = request(url, "server/"+name+"?byName=true");
         return Objects.equals(response, "{\"ok\":false,\"msg\":\"An unknown error occured\"}");

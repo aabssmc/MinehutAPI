@@ -9,26 +9,89 @@ import static com.github.aabssmc.minehutapi.players.Friends.formatUUID;
 @SuppressWarnings("unused")
 public enum Rank {
 
+    /**
+     * The Admin Rank.
+     */
     ADMIN(0),
+    /**
+     * The Developer Rank.
+     */
     DEVELOPER(1),
+    /**
+     * The Sr Mod Rank.
+     */
     SR_MOD(2),
+    /**
+     * The Mod Rank.
+     */
     MOD(3),
+    /**
+     * The Super Helper Rank.
+     */
     SUPER_HELPER(4),
+    /**
+     * The Helper Rank.
+     */
     HELPER(5),
+    /**
+     * The YouTube Rank.
+     */
     YOUTUBE(6),
+    /**
+     * The Artist Rank.
+     */
     ARTIST(7),
+    /**
+     * The Builder Rank.
+     */
     BUILDER(8),
+    /**
+     * The Heart Rank.
+     */
     HEART(9),
+    /**
+     * The Maker Rank.
+     */
     MAKER(10),
+    /**
+     * The Patron Tester Rank.
+     */
     PATRONTESTER(11),
+    /**
+     * The Patron Rank.
+     */
     PATRON(12),
+    /**
+     * The Legend Tester Rank.
+     */
     LEGENDTESTER(13),
+    /**
+     * The Legend Rank.
+     */
     LEGEND(14),
+    /**
+     * The Tester Rank.
+     */
     TESTER(15),
+    /**
+     * The Events Rank.
+     */
     EVENTS(16),
+    /**
+     * The Pro Rank.
+     */
     PRO(17),
+    /**
+     * The Vip+ Rank.
+     */
     VIP_PLUS(18),
+    /**
+     * The Vip Rank.
+     */
     VIP(19),
+    /**
+     * The Default Rank.
+     */
     DEFAULT(20);
 
     private final JSONObject rank;
@@ -38,6 +101,10 @@ public enum Rank {
         rank = new JSONArray(req).getJSONObject(index);
     }
 
+    /**
+     * @param NameOrUUID The Name or UUID of the player.
+     * @return Gets the rank of the player.
+     */
     public static Rank getRank(String NameOrUUID){
         String uuid = "";
         if (NameOrUUID.length() <= 16) {

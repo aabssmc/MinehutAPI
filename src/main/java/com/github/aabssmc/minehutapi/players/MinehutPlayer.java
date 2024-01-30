@@ -50,6 +50,9 @@ public class MinehutPlayer {
         return rank;
     }
 
+    /**
+     * @return All the friends of the player.
+     */
     public List<MinehutPlayer> getFriends(){
         String response = request("https://api.minehut.com/", "network/player/" + uuid + "/friends");
         if (response != null) {
