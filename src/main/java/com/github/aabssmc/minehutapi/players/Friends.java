@@ -8,6 +8,9 @@ import java.util.List;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+/**
+ * The Friends Class
+ */
 @SuppressWarnings("unused")
 public class Friends {
 

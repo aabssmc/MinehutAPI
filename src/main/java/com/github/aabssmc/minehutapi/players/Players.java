@@ -4,6 +4,9 @@ import org.json.JSONObject;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+/**
+ * The Players Class
+ */
 @SuppressWarnings("unused")
 public class Players {
 

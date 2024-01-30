@@ -12,6 +12,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * The Main Class
+ */
 @SuppressWarnings("unused")
 public class MinehutAPI {
     /**

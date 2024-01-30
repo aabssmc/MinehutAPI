@@ -7,6 +7,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Server Class
+ */
 @SuppressWarnings("unused")
 public class Server {
 

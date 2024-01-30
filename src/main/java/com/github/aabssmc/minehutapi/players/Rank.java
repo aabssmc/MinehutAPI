@@ -6,6 +6,9 @@ import org.json.JSONObject;
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 import static com.github.aabssmc.minehutapi.players.Friends.formatUUID;
 
+/**
+ * The Rank Class
+ */
 @SuppressWarnings("unused")
 public enum Rank {
 

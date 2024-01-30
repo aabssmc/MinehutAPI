@@ -8,6 +8,9 @@ import java.util.List;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+/**
+ * The MinehutPlayer Class
+ */
 @SuppressWarnings("unused")
 public class MinehutPlayer {
 

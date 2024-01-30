@@ -11,6 +11,9 @@ import java.util.Objects;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 
+/**
+ * The Servers Class
+ */
 @SuppressWarnings("unused")
 public class Servers {
 
@@ -35,6 +38,7 @@ public class Servers {
 
 
     /**
+     * @param IdOrName The IdOrName of the server.
      * @return The specified server from the id or name.
      */
     public static Server getServer(String IdOrName){
