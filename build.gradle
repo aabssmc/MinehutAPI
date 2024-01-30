@@ -35,6 +35,13 @@ publishing {
         maven(MavenPublication) {
             from components.java
         }
+        javadoc(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier 'javadoc'
+            }
+        }
     }
 }
 
