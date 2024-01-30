@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 
 
 group = 'com.github.aabssmc'
-version = '1.0.3'
+version = '1.0.4'
 
 compileJava {
     sourceCompatibility = JavaVersion.VERSION_17
