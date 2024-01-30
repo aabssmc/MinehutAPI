@@ -252,11 +252,29 @@ public class Server {
      * All of Minehut's server versions.
      */
     public enum VersionType {
+        /**
+         * SpongeForge Server Type
+         */
         SPONGEFORGE,
+        /**
+         * PaperSpigot Server Type
+         */
         PAPER,
+        /**
+         * FabricMC Server Type
+         */
         FABRIC,
+        /**
+         * NachoSpigot Server Type
+         */
         NACHOSPIGOT,
+        /**
+         * Velocity Server Type (Proxy)
+         */
         VELOCITY,
+        /**
+         * Waterfall Server Type (Proxy)
+         */
         WATERFALL;
 
         public String toString(){
@@ -269,11 +287,29 @@ public class Server {
      * All of Minehut's server plans.
      */
     public enum ServerPlan {
+        /**
+         * Starter (Free) Plan
+         */
         STARTER,
+        /**
+         * Standard Plan
+         */
         STANDARD,
+        /**
+         * Pro Plan
+         */
         PRO,
+        /**
+         * Ultimate Plan
+         */
         ULTIMATE,
+        /**
+         * External Plan
+         */
         EXTERNAL,
+        /**
+         * Custom Plan
+         */
         CUSTOM;
 
         public String toString(){
