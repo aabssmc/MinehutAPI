@@ -16,12 +16,12 @@ dependencies {
 
 Maven:
 ```
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
   <dependecies>
     <dependency>
       <groupId>com.github.aabssmc</groupId>
