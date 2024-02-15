@@ -3,7 +3,7 @@
 A random MinehutAPI I made because I was bored.
 
 Gradle:
-```
+```gradle
 repositories {
     mavenCentral()
     maven {url 'https://jitpack.io'}
@@ -15,7 +15,7 @@ dependencies {
 ```
 
 Maven:
-```
+```gradle
   <repositories>
     <repository>
       <id>jitpack.io</id>
