@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.aabssmc:MinehutAPI:1.0.6'
+    implementation 'com.github.aabssmc:MinehutAPI:1.0.7'
 }
 ```
 
