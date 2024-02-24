@@ -48,7 +48,7 @@ public class Friends {
      * @param uuidString The uuid to format.
      * @return a formatted uuid
      */
-    private static String formatUUID(String uuidString) {
+    static String formatUUID(String uuidString) {
         return String.format(
                 "%s-%s-%s-%s-%s",
                 uuidString.substring(0, 8),
