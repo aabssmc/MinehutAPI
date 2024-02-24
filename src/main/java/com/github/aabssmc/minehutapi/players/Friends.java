@@ -14,8 +14,6 @@ import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 @SuppressWarnings("unused")
 public class Friends {
 
-    private static String url = "https://api.minehut.com/";
-
     /**
      * @param NameOrUuid Either the uuid or the name of the user.
      * @return All the user's friends.
@@ -29,6 +27,7 @@ public class Friends {
                 uuid = formatUUID(NameOrUuid);
             }
         }
+        String url = "https://api.minehut.com/";
         String response = request(url, "network/player/" + uuid + "/friends");
         JSONObject jsonResponse = new JSONObject(response);
         JSONArray friendsArray = jsonResponse.getJSONArray("friends");
@@ -49,7 +48,7 @@ public class Friends {
      * @param uuidString The uuid to format.
      * @return a formatted uuid
      */
-    public static String formatUUID(String uuidString) {
+    private static String formatUUID(String uuidString) {
         return String.format(
                 "%s-%s-%s-%s-%s",
                 uuidString.substring(0, 8),

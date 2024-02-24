@@ -3,14 +3,14 @@
 
 package com.github.aabssmc.minehutapi;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 /**
  * The Main Class
@@ -29,19 +29,15 @@ public class MinehutAPI {
      */
     @Nullable
     public static String request(@NotNull String url, @NotNull String endpoint){
-        OkHttpClient client = new OkHttpClient();
-        Request req = new Request.Builder()
-                .url(url + endpoint)
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url+endpoint))
                 .build();
-        try (Response response = client.newCall(req).execute()){
-            if (response.body() != null) {
-                return response.body().string();
-            }
-        } catch (IOException e) {
+        try {
+            return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString()).get().body();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println("An unknown error occurred! Minehut servers are down?");
-        return null;
     }
 
     /**
@@ -81,6 +77,14 @@ public class MinehutAPI {
      */
     public static int getUserCount(){
         String servers = request(url, "network/homepage_stats");
+        return new JSONObject(servers).getInt("user_count");
+    }
+
+    /**
+     * @return Gets the amount of all users registered.
+     */
+    public static int getRawMOTD(){
+        String servers = request("https://api.mcsrvstat.us/", "2/minehut.com");
         return new JSONObject(servers).getInt("user_count");
     }
 }
