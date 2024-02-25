@@ -141,6 +141,13 @@ public class Server {
     }
 
     /**
+     * @return The server's active server plan
+     */
+    public String getActiveServerPlan() {
+        return json.getString("activeServerPlan");
+    }
+
+    /**
      * @return The server's storage node.
      */
     public String getStorageNode(){
