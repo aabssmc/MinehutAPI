@@ -21,7 +21,7 @@ public class Friends {
     public static List<MinehutPlayer> getFriends(String NameOrUuid) {
         String uuid = "";
         if (NameOrUuid.length() <= 16) {
-            uuid = formatUUID(request("https://mcapi.aabss.lol/uuid/", NameOrUuid));
+            uuid = formatUUID(getUUID(NameOrUuid));
         } else {
             if (!NameOrUuid.contains("-")) {
                 uuid = formatUUID(NameOrUuid);
@@ -34,11 +34,10 @@ public class Friends {
         List<MinehutPlayer> friends = new ArrayList<>();
         for (int i = 0; i < friendsArray.length(); i++) {
             JSONObject friendObject = friendsArray.getJSONObject(i);
-            String id = friendObject.getString("uuid");
             String name = friendObject.getString("name");
             Rank rank = Rank.valueOf(friendObject.getString("rank"));
             boolean is = friendObject.getBoolean("online");
-            MinehutPlayer friend = new MinehutPlayer(id, name, rank, is);
+            MinehutPlayer friend = new MinehutPlayer(name, rank, is);
             friends.add(friend);
         }
         return friends;
@@ -57,5 +56,15 @@ public class Friends {
                 uuidString.substring(16, 20),
                 uuidString.substring(20)
         );
+    }
+
+    static String getUUID(String name) {
+        JSONObject json = new JSONObject(request("https://api.mojang.com/users/", "profiles/minecraft/" + name));
+        return json.getString("id");
+    }
+
+    static String getName(String uuid) {
+        JSONObject json = new JSONObject(request("https://sessionserver.mojang.com/session/", "minecraft/profile/" + uuid + "?unsigned=false"));
+        return json.getString("name");
     }
 }

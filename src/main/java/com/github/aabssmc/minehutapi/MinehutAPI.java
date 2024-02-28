@@ -3,6 +3,7 @@
 
 package com.github.aabssmc.minehutapi;
 
+import com.github.aabssmc.minehutapi.players.Friends;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;

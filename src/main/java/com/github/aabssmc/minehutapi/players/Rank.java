@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import static com.github.aabssmc.minehutapi.MinehutAPI.request;
 import static com.github.aabssmc.minehutapi.players.Friends.formatUUID;
+import static com.github.aabssmc.minehutapi.players.Friends.getUUID;
 
 /**
  * The Rank Class
@@ -111,7 +112,7 @@ public enum Rank {
     public static Rank getRank(String NameOrUUID){
         String uuid = "";
         if (NameOrUUID.length() <= 16) {
-            uuid = formatUUID(request("https://mcapi.aabss.lol/uuid/", NameOrUUID));
+            uuid = formatUUID(getUUID(NameOrUUID));
         } else {
             if (!NameOrUUID.contains("-")) {
                 uuid = formatUUID(NameOrUUID);
