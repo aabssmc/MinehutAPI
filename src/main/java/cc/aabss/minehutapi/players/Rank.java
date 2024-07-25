@@ -1,11 +1,11 @@
-package com.github.aabssmc.minehutapi.players;
+package cc.aabss.minehutapi.players;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import static com.github.aabssmc.minehutapi.MinehutAPI.request;
-import static com.github.aabssmc.minehutapi.players.Friends.formatUUID;
-import static com.github.aabssmc.minehutapi.players.Friends.getUUID;
+import static cc.aabss.minehutapi.MinehutAPI.request;
+import static cc.aabss.minehutapi.players.Friends.formatUUID;
+import static cc.aabss.minehutapi.players.Friends.getUUID;
 
 /**
  * The Rank Class
@@ -98,12 +98,12 @@ public enum Rank {
      */
     DEFAULT(20);
 
-    private final JSONObject rank;
-
     Rank(Integer index) {
         String req = request("https://api.minehut.com/", "network/ranks");
-        rank = new JSONArray(req).getJSONObject(index);
+        rank = JsonParser.parseString(req).getAsJsonArray().get(index).getAsJsonObject();
     }
+
+    private final JsonObject rank;
 
     /**
      * @param NameOrUUID The Name or UUID of the player.
@@ -118,106 +118,106 @@ public enum Rank {
                 uuid = formatUUID(NameOrUUID);
             }
         }
-        JSONObject json = new JSONObject(request("https://api.minehut.com/cosmetics/profile/", uuid));
-        return valueOf(json.getString("rank"));
+        JsonObject json = JsonParser.parseString(request("https://api.minehut.com/cosmetics/profile/", uuid)).getAsJsonObject();
+        return valueOf(json.get("rank").getAsString());
     }
 
     /**
      * @return Returns the id of the rank.
      */
     public String getId(){
-        return rank.getString("id");
+        return rank.get("id").getAsString();
     }
 
     /**
      * @return Returns the name of the rank.
      */
     public String getName(){
-        return rank.getString("name");
+        return rank.get("name").getAsString();
     }
 
     /**
      * @return Returns the ordinal of the rank.
      */
     public int getOrdinal(){
-        return rank.getInt("ordinal");
+        return rank.get("ordinal").getAsInt();
     }
 
     /**
      * @return Returns the color of the rank.
      */
     public String getColor(){
-        return rank.getString("color");
+        return rank.get("color").getAsString();
     }
 
     /**
      * @return Returns the chat color of the rank.
      */
     public String getChatColor(){
-        return rank.getString("chatColor");
+        return rank.get("chatColor").getAsString();
     }
 
     /**
      * @return Returns the prefix color of the rank.
      */
     public String getPrefixColor(){
-        return rank.getString("prefixColor");
+        return rank.get("prefixColor").getAsString();
     }
 
     /**
      * @return Returns the prefix of the rank.
      */
     public String getPrefix(){
-        return rank.getString("prefix");
+        return rank.get("prefix").getAsString();
     }
 
     /**
      * @return Returns the legacy prefix of the rank.
      */
     public String getPrefixLegacy(){
-        return rank.getString("prefixLegacy");
+        return rank.get("prefixLegacy").getAsString();
     }
 
     /**
      * @return Returns the mini message prefix of the rank.
      */
     public String getPrefixMini(){
-        return rank.getString("prefixMini");
+        return rank.get("prefixMini").getAsString();
     }
 
     /**
      * @return Returns true if the rank is a staff rank.
      */
     public boolean isStaff(){
-        return rank.getBoolean("staff");
+        return rank.get("staff").getAsBoolean();
     }
 
     /**
      * @return Returns the chat delay seconds of the rank.
      */
     public int getChatDelaySeconds(){
-        return rank.getInt("chatDelaySeconds");
+        return rank.get("chatDelaySeconds").getAsInt();
     }
 
     /**
      * @return Returns the rate limit between each ad of the rank.
      */
     public int getAdRateLimit(){
-        return rank.getInt("adRateLimit");
+        return rank.get("adRateLimit").getAsInt();
     }
 
     /**
      * @return Returns the limit of each ad each month of the rank.
      */
     public int getAdMonthlyLimit(){
-        return rank.getInt("adMonthlyLimit");
+        return rank.get("adMonthlyLimit").getAsInt();
     }
 
     /**
      * @return Returns true if the rank can be subscribed to.
      */
     public boolean isSubscription(){
-        return rank.getBoolean("subscription");
+        return rank.get("subscription").getAsBoolean();
     }
 
     /**

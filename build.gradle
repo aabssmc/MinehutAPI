@@ -1,8 +1,11 @@
-apply plugin: 'java'
-apply plugin: 'maven-publish'
+plugins {
+    id 'java'
+    id 'signing'
+    id 'maven-publish'
+}
 
 
-group = 'com.github.aabssmc'
+group = 'cc.aabss'
 version = '1.0.7'
 
 compileJava {
@@ -15,34 +18,18 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.json:json:20231013'
+    implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'org.jetbrains:annotations:24.0.0'
 }
 
-test {
-    useJUnitPlatform()
-}
 
 java {
     withSourcesJar()
     withJavadocJar()
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-        }
-        javadoc(MavenPublication) {
-            artifact sourcesJar {
-                classifier 'javadoc'
-            }
-        }
-    }
-}
-
 wrapper {
-    gradleVersion = "7.3.3"
+    gradleVersion = "8.7"
     distributionType = Wrapper.DistributionType.ALL
 }
 

@@ -1,9 +1,10 @@
-package com.github.aabssmc.minehutapi.server;
+package cc.aabss.minehutapi.server;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import static com.github.aabssmc.minehutapi.MinehutAPI.request;
+import static cc.aabss.minehutapi.MinehutAPI.request;
 
 /**
  * The Icon Class
@@ -414,101 +415,99 @@ public enum Icon {
      */
     IRON_ORE("5e8cb37153ba8700a85a7c64");
 
-
-
-        private JSONObject icon;
-
-        Icon(String id) {
-            String req = request("https://api.minehut.com/", "servers/icons");
-            JSONArray jsonArray = new JSONArray(req);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String objectId = jsonObject.getString("_id");
-                if (objectId.equals(id)) {
-                    icon = jsonObject;
-                }
+    Icon(String id) {
+        String req = request("https://api.minehut.com/", "servers/icons");
+        JsonArray jsonArray = JsonParser.parseString(req).getAsJsonArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            String objectId = jsonObject.get("_id").getAsString();
+            if (objectId.equals(id)) {
+                icon = jsonObject;
             }
-            icon = null;
         }
+        icon = null;
+    }
+
+    private JsonObject icon;
 
     /**
      * @param id The id of the icon.
      * @return An icon.
      */
-        // if anyone knows how to improve this please make a PR!
-        public static Icon getIcon(String id){
-            String req = request("https://api.minehut.com/", "servers/icons");
-            JSONArray jsonArray = new JSONArray(req);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String objectId = jsonObject.getString("_id");
-                if (objectId.equals(id)) {
-                    return Icon.valueOf(jsonObject.getString("icon_name"));
-                }
+    // if anyone knows how to improve this please make a PR!
+    public static Icon getIcon(String id){
+        String req = request("https://api.minehut.com/", "servers/icons");
+        JsonArray jsonArray = JsonParser.parseString(req).getAsJsonArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            String objectId = jsonObject.get("_id").getAsString();
+            if (objectId.equals(id)) {
+                return Icon.valueOf(jsonObject.get("icon_name").getAsString());
             }
-            return null;
         }
+        return null;
+    }
 
     /**
      * @return Returns true if the icon can be purchased now.
      */
     public boolean isAvailable(){
-        return icon.getBoolean("available");
+        return icon.get("available").getAsBoolean();
     }
 
     /**
      * @return Returns the date the icon was created in unix timestamp.
      */
     public long getCreated(){
-        return icon.getLong("created");
+        return icon.get("created").getAsLong();
     }
 
     /**
      * @return Returns true if the icon is disabled.
      */
     public boolean isDisabled(){
-        return icon.getBoolean("disabled");
+        return icon.get("disabled").getAsBoolean();
     }
 
     /**
      * @return Returns the display name of the icon.
      */
     public String getDisplayName(){
-        return icon.getString("display_name");
+        return icon.get("display_name").getAsString();
     }
 
     /**
      * @return Returns the icon name of the icon.
      */
     public String getIconName(){
-        return icon.getString("icon_name");
+        return icon.get("icon_name").getAsString();
     }
 
     /**
      * @return Returns the date the icon was last updated in unix timestamp.
      */
     public long getLastUpdated(){
-        return icon.getLong("last_updated");
+        return icon.get("last_updated").getAsLong();
     }
 
     /**
      * @return Returns the price of the icon.
      */
     public int getPrice(){
-        return icon.getInt("price");
+        return icon.get("price").getAsInt();
     }
 
     /**
      * @return Returns rank of the icon.
      */
     public String getRank(){
-        return icon.getString("rank");
+        return icon.get("rank").getAsString();
     }
 
     /**
      * @return Returns the id of the icon.
      */
     public String getId(){
-        return icon.getString("_id");
+        return icon.get("_id").getAsString();
     }
 }

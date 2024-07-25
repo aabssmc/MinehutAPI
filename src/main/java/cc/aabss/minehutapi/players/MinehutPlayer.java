@@ -1,22 +1,19 @@
-package com.github.aabssmc.minehutapi.players;
+package cc.aabss.minehutapi.players;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.aabssmc.minehutapi.MinehutAPI.request;
+import static cc.aabss.minehutapi.MinehutAPI.request;
 
 /**
  * The MinehutPlayer Class
  */
 @SuppressWarnings("unused")
 public class MinehutPlayer {
-
-    private final String name;
-    private final Rank rank;
-    private final boolean online;
 
     /**
      * @param name The name of the player.
@@ -28,6 +25,10 @@ public class MinehutPlayer {
         this.rank = rank;
         this.online = online;
     }
+
+    private final String name;
+    private final Rank rank;
+    private final boolean online;
 
     /**
      * @return The UUID of the player.
@@ -56,14 +57,14 @@ public class MinehutPlayer {
     public List<MinehutPlayer> getFriends(){
         String response = request("https://api.minehut.com/", "network/player/" + getUUID() + "/friends");
         if (response != null) {
-            JSONObject jsonResponse = new JSONObject(response);
-            JSONArray friendsArray = jsonResponse.getJSONArray("friends");
+            JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
+            JsonArray friendsArray = jsonResponse.getAsJsonArray("friends");
             List<MinehutPlayer> friends = new ArrayList<>();
-            for (int i = 0; i < friendsArray.length(); i++) {
-                JSONObject friendObject = friendsArray.getJSONObject(i);
-                String name = friendObject.getString("name");
-                Rank rank = Rank.valueOf(friendObject.getString("rank"));
-                boolean is = friendObject.getBoolean("online");
+            for (int i = 0; i < friendsArray.size(); i++) {
+                JsonObject friendObject = friendsArray.get(i).getAsJsonObject();
+                String name = friendObject.get("name").getAsString();
+                Rank rank = Rank.valueOf(friendObject.get("rank").getAsString());
+                boolean is = friendObject.get("online").getAsBoolean();
                 MinehutPlayer friend = new MinehutPlayer(name, rank, is);
                 friends.add(friend);
             }

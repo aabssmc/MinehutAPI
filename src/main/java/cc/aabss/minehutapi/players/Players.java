@@ -1,8 +1,8 @@
-package com.github.aabssmc.minehutapi.players;
+package cc.aabss.minehutapi.players;
 
-import org.json.JSONObject;
+import com.google.gson.JsonParser;
 
-import static com.github.aabssmc.minehutapi.MinehutAPI.request;
+import static cc.aabss.minehutapi.MinehutAPI.request;
 
 /**
  * The Players Class
@@ -17,7 +17,7 @@ public class Players {
      */
     public static int getOnlinePlayerCount(){
         String servers = request(url, "network/simple_stats");
-        return new JSONObject(servers).getInt("player_count");
+        return JsonParser.parseString(servers).getAsJsonObject().get("player_count").getAsInt();
     }
 
     /**
@@ -25,7 +25,7 @@ public class Players {
      */
     public static int getBedrockTotal(){
         String servers = request(url, "network/players/distribution");
-        return new JSONObject(servers).getInt("bedrockTotal");
+        return JsonParser.parseString(servers).getAsJsonObject().get("bedrockTotal").getAsInt();
     }
 
     /**
@@ -33,7 +33,7 @@ public class Players {
      */
     public static int getJavaTotal(){
         String servers = request(url, "network/players/distribution");
-        return new JSONObject(servers).getInt("javaTotal");
+        return JsonParser.parseString(servers).getAsJsonObject().get("javaTotal").getAsInt();
     }
 
     /**
@@ -41,7 +41,7 @@ public class Players {
      */
     public static int getBedrockLobby(){
         String servers = request(url, "network/players/distribution");
-        return new JSONObject(servers).getInt("bedrockLobby");
+        return JsonParser.parseString(servers).getAsJsonObject().get("bedrockLobby").getAsInt();
     }
 
     /**
@@ -49,7 +49,7 @@ public class Players {
      */
     public static int getBedrockPlayerServer(){
         String servers = request(url, "network/players/distribution");
-        return new JSONObject(servers).getInt("bedrockPlayerServer");
+        return JsonParser.parseString(servers).getAsJsonObject().get("bedrockPlayerServer").getAsInt();
     }
 
     /**
@@ -57,7 +57,7 @@ public class Players {
      */
     public static int getJavaLobby(){
         String servers = request(url, "network/players/distribution");
-        return new JSONObject(servers).getInt("javaLobby");
+        return JsonParser.parseString(servers).getAsJsonObject().get("javaLobby").getAsInt();
     }
 
     /**
@@ -65,6 +65,6 @@ public class Players {
      */
     public static int getJavaPlayerServer(){
         String servers = request(url, "network/players/distribution");
-        return new JSONObject(servers).getInt("javaPlayerServer");
+        return JsonParser.parseString(servers).getAsJsonObject().get("javaPlayerServer").getAsInt();
     }
 }

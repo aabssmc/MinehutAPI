@@ -1,8 +1,8 @@
-package com.github.aabssmc.minehutapi.server;
+package cc.aabss.minehutapi.server;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,22 +14,22 @@ import java.util.List;
 public class Server {
 
     /**
-     * The response body retrieved from the request.
-     */
-    private final JSONObject json;
-
-    /**
      * @param json The response body retrieved from the request.
      */
-    public Server(JSONObject json){
-        this.json = json.getJSONObject("server");
+    public Server(JsonObject json){
+        this.json = json.getAsJsonObject("server");
     }
+
+    /**
+     * The response body retrieved from the request.
+     */
+    private final JsonObject json;
 
     /**
      * @return The server's ID.
      */
     public String getID(){
-        return json.getString("_id");
+        return json.get("_id").getAsString();
     }
 
     /**
@@ -37,9 +37,9 @@ public class Server {
      */
     @Nullable
     public List<String> getCategories(){
-        JSONArray array = json.getJSONArray("categories");
+        JsonArray array = json.getAsJsonArray("categories");
         List<String> categories = new ArrayList<>();
-        for (Object id : array.toList()){
+        for (Object id : array.asList()){
             categories.add((String) id);
         }
         return categories;
@@ -50,9 +50,9 @@ public class Server {
      */
     @Nullable
     public List<Icon> getPurchasedIcons(){
-        JSONArray array = json.getJSONArray("purchased_icons");
+        JsonArray array = json.getAsJsonArray("purchased_icons");
         List<Icon> icons = new ArrayList<>();
-        for (Object id : array.toList()){
+        for (Object id : array.asList()){
             icons.add(Icon.getIcon((String) id));
         }
         return icons;
@@ -62,37 +62,33 @@ public class Server {
      * @return The amount of backup slots a server has.
      */
     public int getBackupSlots(){
-        return json.getInt("backup_slots");
+        return json.get("backup_slots").getAsInt();
     }
 
     /**
      * @return If the server is suspended.
      */
     public boolean isSuspended(){
-        return json.getBoolean("suspended");
+        return json.get("suspended").getAsBoolean();
     }
 
     /**
      * @return The server version type (ex: Paper)
      */
     public VersionType getServerVersionType(){
-        String type = json.getString("server_version_type");
-        return switch (type.toLowerCase().replaceAll("_", "")) {
-            case "spongeforge" -> VersionType.SPONGEFORGE;
-            case "paper" -> VersionType.PAPER;
-            case "fabric" -> VersionType.FABRIC;
-            case "nachospigot" -> VersionType.NACHOSPIGOT;
-            case "velocity" -> VersionType.VELOCITY;
-            case "waterfall" -> VersionType.WATERFALL;
-            default -> null;
-        };
+        String type = json.get("server_version_type").getAsString();
+        try {
+            return VersionType.valueOf(type.toUpperCase().replaceAll("_", ""));
+        } catch (IllegalArgumentException ignored) {
+            return VersionType.UNKNOWN;
+        }
     }
 
     /**
      * @return If the server is a proxy (Velocity, Waterfall etc.).
      */
     public boolean isProxy(){
-        return json.getBoolean("proxy");
+        return json.get("proxy").getAsBoolean();
     }
 
     /**
@@ -100,9 +96,9 @@ public class Server {
      */
     @Nullable
     public List<Server> getConnectedServers(){
-        JSONArray array = json.getJSONArray("connectedServers");
+        JsonArray array = json.getAsJsonArray("connectedServers");
         List<Server> servers = new ArrayList<>();
-        for (Object id : array.toList()){
+        for (Object id : array.asList()){
             servers.add(Servers.getServer((String) id));
         }
         return servers;
@@ -113,87 +109,82 @@ public class Server {
      */
     @Nullable
     public String getMOTD(){
-        return json.getString("motd");
+        return json.get("motd").getAsString();
     }
 
     /**
      * @return If the server can be discovered.
      */
     public boolean getVisibility(){
-        return json.getBoolean("visibility");
+        return json.get("visibility").getAsBoolean();
     }
 
     /**
      * @return The server's plan. (ex: pro, custom, etc.)
      */
     public ServerPlan getServerPlan(){
-        String type = json.getString("server_plan");
-        String modtype = type.toLowerCase().replaceAll("_", "").replaceAll("_"+json.getString("_id"), "");
-        return switch (modtype) {
-            case "free" -> ServerPlan.STARTER;
-            case "standard" -> ServerPlan.STANDARD;
-            case "pro" -> ServerPlan.PRO;
-            case "ultimate" -> ServerPlan.ULTIMATE;
-            case "external" -> ServerPlan.EXTERNAL;
-            case "custom" -> ServerPlan.CUSTOM;
-            default -> null;
-        };
+        String type = json.get("server_plan").getAsString();
+        try {
+            return ServerPlan.valueOf(type.toUpperCase().replaceAll("_", ""));
+        } catch (IllegalArgumentException ignored) {
+            return ServerPlan.UNKNOWN;
+        }
     }
 
     /**
      * @return The server's active server plan
      */
     public String getActiveServerPlan() {
-        return json.getString("activeServerPlan");
+        return json.get("activeServerPlan").getAsString();
     }
 
     /**
      * @return The server's storage node.
      */
     public String getStorageNode(){
-        return json.getString("storage_node");
+        return json.get("storage_node").getAsString();
     }
 
     /**
      * @return The server's default banner image.
      */
     public String getDefaultBannerImage(){
-        return json.getString("default_banner_image");
+        return json.get("default_banner_image").getAsString();
     }
 
     /**
      * @return The server's default banner glint.
      */
     public String getDefaultBannerTint(){
-        return json.getString("default_banner_tint");
+        return json.get("default_banner_tint").getAsString();
     }
 
     /**
      * @return The Minecraft UUID of the owner.
      */
     public String getOwner(){
-        return json.getString("owner");
+        return json.get("owner").getAsString();
     }
 
     /**
      * @return The server's name.
      */
     public String getName(){
-        return json.getString("name");
+        return json.get("name").getAsString();
     }
 
     /**
      * @return The date the server was created in unix timestamp.
      */
     public long getCreation(){
-        return json.getLong("creation");
+        return json.get("creation").getAsLong();
     }
 
     /**
-     * @return The date the server was created in unix timestamp.
+     * @return The platform of the server.
      */
     public String getPlatform(){
-        return json.getString("platform");
+        return json.get("platform").getAsString();
     }
 
 
@@ -201,35 +192,35 @@ public class Server {
      * @return The amount of credits that are used for the server each day.
      */
     public double getCreditsPerDay(){
-        return json.getDouble("credits_per_day");
+        return json.get("credits_per_day").getAsDouble();
     }
 
     /**
      * @return The server's port.
      */
     public long getPort(){
-        return json.getLong("port");
+        return json.get("port").getAsLong();
     }
 
     /**
      * @return The last time the server was online.
      */
     public long getLastOnline(){
-        return json.getLong("last_online");
+        return json.get("last_online").getAsLong();
     }
 
     /**
      * @return If the server has expired.
      */
     public boolean isExpired(){
-        return json.getBoolean("expired");
+        return json.get("expired").getAsBoolean();
     }
 
     /**
      * @return The amount of times people have joined.
      */
     public int getJoins(){
-        return json.getInt("joins");
+        return json.get("joins").getAsInt();
     }
 
 
@@ -237,21 +228,21 @@ public class Server {
      * @return If the server is online.
      */
     public Boolean isOnline(){
-        return json.getBoolean("online");
+        return json.get("online").getAsBoolean();
     }
 
     /**
      * @return The maximum amount of players allowed on the server.
      */
     public int getMaxPlayers(){
-        return json.getInt("maxPlayers");
+        return json.get("maxPlayers").getAsInt();
     }
 
     /**
      * @return The amount of players on the server.
      */
     public int getPlayerCount(){
-        return json.getInt("playerCount");
+        return json.get("playerCount").getAsInt();
     }
 
     public String toString(){
@@ -285,7 +276,11 @@ public class Server {
         /**
          * Waterfall Server Type (Proxy)
          */
-        WATERFALL;
+        WATERFALL,
+        /**
+         * Unknown Server Type
+         */
+        UNKNOWN;
 
         public String toString(){
             return "Version_Type: " + name();
@@ -320,7 +315,11 @@ public class Server {
         /**
          * Custom Plan
          */
-        CUSTOM;
+        CUSTOM,
+        /**
+         * Unknown Server Plan
+         */
+        UNKNOWN;
 
         public String toString(){
             return "Server_Plan: " + name();

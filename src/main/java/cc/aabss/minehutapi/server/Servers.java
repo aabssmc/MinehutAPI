@@ -1,14 +1,15 @@
-package com.github.aabssmc.minehutapi.server;
+package cc.aabss.minehutapi.server;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.github.aabssmc.minehutapi.MinehutAPI.request;
+import static cc.aabss.minehutapi.MinehutAPI.request;
 
 /**
  * The Servers Class
@@ -24,12 +25,11 @@ public class Servers {
     // WARNING! This is a high usage method and may cause large amounts of lag.
     public static List<Server> getServers() {
         String response = request(url, "servers");
-        JSONObject json = new JSONObject(response);
-        JSONArray serversArray = json.getJSONArray("servers");
+        JsonArray json = JsonParser.parseString(response).getAsJsonObject().getAsJsonArray("servers");
         List<Server> servers = new ArrayList<>();
-        for (int i = 0; i < serversArray.length(); i++) {
-            JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
-            String serverId = staticInfo.getString("_id");
+        for (int i = 0; i < json.size(); i++) {
+            JsonObject staticInfo = json.get(i).getAsJsonObject().getAsJsonObject("staticInfo");
+            String serverId = staticInfo.get("_id").getAsString();
             servers.add(getServer(serverId));
         }
         return servers;
@@ -42,7 +42,7 @@ public class Servers {
      */
     public static Server getServer(String IdOrName){
         String response = request(url,"server/" + IdOrName + (IdOrName.length() <= 16 ? "?byName=true" : ""));
-        return new Server(new JSONObject(response));
+        return new Server(JsonParser.parseString(response).getAsJsonObject());
     }
 
     /**
@@ -52,12 +52,12 @@ public class Servers {
     @NotNull
     public static List<Server> getTopServers() {
         String response = request(url,"network/top_servers");
-        JSONObject json = new JSONObject(response);
-        JSONArray serversArray = json.getJSONArray("servers");
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
+        JsonArray serversArray = json.get("servers").getAsJsonArray();
         List<Server> servers = new ArrayList<>();
-        for (int i = 0; i < serversArray.length(); i++) {
-            JSONObject staticInfo = serversArray.getJSONObject(i).getJSONObject("staticInfo");
-            String serverId = staticInfo.getString("_id");
+        for (int i = 0; i < serversArray.size(); i++) {
+            JsonObject staticInfo = serversArray.get(i).getAsJsonObject().get("staticInfo").getAsJsonObject();
+            String serverId = staticInfo.get("_id").getAsString();
             servers.add(getServer(serverId));
         }
         return servers;
