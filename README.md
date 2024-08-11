@@ -6,11 +6,11 @@ Gradle:
 ```gradle
 repositories {
     mavenCentral()
-    maven {url 'https://jitpack.io'}
+    maven {url 'https://repo.aabss.cc/releases'}
 }
 
 dependencies {
-    implementation 'com.github.aabssmc:MinehutAPI:1.0.7'
+    implementation 'cc.aabss:minehut:1.0.7'
 }
 ```
 
@@ -18,14 +18,14 @@ Maven:
 ```gradle
   <repositories>
     <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
+      <id>aabss</id>
+      <url>https://repo.aabss.cc/releases</url>
     </repository>
   </repositories>
   <dependecies>
     <dependency>
-      <groupId>com.github.aabssmc</groupId>
-      <artifactId>MinehutAPI</artifactId>
+      <groupId>cc.aabss</groupId>
+      <artifactId>minehut</artifactId>
       <version>1.0.7</version>
     </dependency>
   </dependencies>
