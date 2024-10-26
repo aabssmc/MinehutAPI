@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.aabssmc:MinehutAPI:1.0.7'
+    implementation 'cc.aabss:minehutapi:1.0.7'
 }
 ```
 
@@ -18,14 +18,14 @@ Maven:
 ```gradle
   <repositories>
     <repository>
-      <id>jitpack.io</id>
+      <id>aabss</id>
       <url>https://jitpack.io</url>
     </repository>
   </repositories>
   <dependecies>
     <dependency>
-      <groupId>com.github.aabssmc</groupId>
-      <artifactId>MinehutAPI</artifactId>
+      <groupId>cc.aabss</groupId>
+      <artifactId>minehutapi</artifactId>
       <version>1.0.7</version>
     </dependency>
   </dependencies>
