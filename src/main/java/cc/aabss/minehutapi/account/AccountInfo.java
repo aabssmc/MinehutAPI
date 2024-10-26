@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Info of an Account.
+ */
 public class AccountInfo {
 
     private final JsonObject json;
     private final MinehutAPI api;
 
-    public AccountInfo(JsonObject json, MinehutAPI api) {
+    AccountInfo(JsonObject json, MinehutAPI api) {
         this.json = json;
         this.api = api;
     }
@@ -157,8 +160,11 @@ public class AccountInfo {
     /**
      * @return The account info as a string.
      */
-    public String toString(){
-        return "Email: "+getEmail()+" Id: "+getId();
+    @Override
+    public String toString() {
+        return "AccountInfo{" +
+                "json=" + json +
+                ", api=" + api +
+                '}';
     }
-
 }

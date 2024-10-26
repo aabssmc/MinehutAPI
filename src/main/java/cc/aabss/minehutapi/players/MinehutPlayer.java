@@ -1,13 +1,7 @@
 package cc.aabss.minehutapi.players;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static cc.aabss.minehutapi.MinehutAPI.request;
 
 /**
  * The MinehutPlayer Class
@@ -16,25 +10,38 @@ import static cc.aabss.minehutapi.MinehutAPI.request;
 public class MinehutPlayer {
 
     /**
+     * @param profileId The minehut profile id of the player.
+     * @param uuid The uuid of the player.
      * @param name The name of the player.
-     * @param rank The rank of the player.
      * @param online The online state of the player.
+     * @param rank The rank of the player.
+     * @param api internal use.
      */
-    public MinehutPlayer(String name, Rank rank, boolean online){
+    MinehutPlayer(String profileId, String uuid, String name, boolean online, Rank rank, Players api){
+        this.profileId = profileId;
+        this.uuid = uuid;
         this.name = name;
-        this.rank = rank;
         this.online = online;
+        this.rank = rank;
+        this.api = api;
     }
 
+    private final String profileId;
     private final String name;
+    private final String uuid;
     private final Rank rank;
     private final boolean online;
+    private final Players api;
+
+    public String getProfileId() {
+        return profileId;
+    }
 
     /**
      * @return The UUID of the player.
      */
     public String getUUID(){
-        return Friends.getUUID(this.name);
+        return uuid;
     }
 
     /**
@@ -55,22 +62,7 @@ public class MinehutPlayer {
      * @return All the friends of the player.
      */
     public List<MinehutPlayer> getFriends(){
-        String response = request("https://api.minehut.com/", "network/player/" + getUUID() + "/friends");
-        if (response != null) {
-            JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
-            JsonArray friendsArray = jsonResponse.getAsJsonArray("friends");
-            List<MinehutPlayer> friends = new ArrayList<>();
-            for (int i = 0; i < friendsArray.size(); i++) {
-                JsonObject friendObject = friendsArray.get(i).getAsJsonObject();
-                String name = friendObject.get("name").getAsString();
-                Rank rank = Rank.valueOf(friendObject.get("rank").getAsString());
-                boolean is = friendObject.get("online").getAsBoolean();
-                MinehutPlayer friend = new MinehutPlayer(name, rank, is);
-                friends.add(friend);
-            }
-            return friends;
-        }
-        return null;
+        return api.getFriends(uuid);
     }
 
     /**
@@ -80,9 +72,18 @@ public class MinehutPlayer {
         return online;
     }
 
-    public String toString(){
-        return getRank() + " " + getName();
-
+    /**
+     * @return The minehut player as a string.
+     */
+    @Override
+    public String toString() {
+        return "MinehutPlayer{" +
+                "profileId='" + profileId + '\'' +
+                ", name='" + name + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", rank=" + rank +
+                ", online=" + online +
+                ", api=" + api +
+                '}';
     }
-
 }

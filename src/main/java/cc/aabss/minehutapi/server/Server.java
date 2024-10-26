@@ -15,15 +15,18 @@ public class Server {
 
     /**
      * @param json The response body retrieved from the request.
+     * @param api internal use only
      */
-    public Server(JsonObject json){
+    public Server(JsonObject json, Servers api){
         this.json = json.getAsJsonObject("server");
+        this.api = api;
     }
 
     /**
      * The response body retrieved from the request.
      */
     private final JsonObject json;
+    private final Servers api;
 
     /**
      * @return The server's ID.
@@ -99,7 +102,7 @@ public class Server {
         JsonArray array = json.getAsJsonArray("connectedServers");
         List<Server> servers = new ArrayList<>();
         for (Object id : array.asList()){
-            servers.add(Servers.getServer((String) id));
+            servers.add(api.getServer((String) id));
         }
         return servers;
     }
@@ -245,8 +248,11 @@ public class Server {
         return json.get("playerCount").getAsInt();
     }
 
-    public String toString(){
-        return "Name: " + getName() + " ID: " + getID() + " VersionType: " + getServerVersionType() + " ServerPlan: " + getServerPlan();
+    @Override
+    public String toString() {
+        return "Server{" +
+                "json=" + json +
+                '}';
     }
 
     /**

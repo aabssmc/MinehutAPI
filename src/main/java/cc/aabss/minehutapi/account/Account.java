@@ -17,6 +17,9 @@ import java.util.List;
  */
 public class Account {
 
+    /**
+     * @param api The minehut api login instance.
+     */
     public Account(MinehutAPI api) {
         this.api = api;
     }
@@ -24,38 +27,10 @@ public class Account {
     private final MinehutAPI api;
 
     /**
-     * @return The current token.
-     */
-    public String getToken(){
-        return api.token;
-    }
-
-    /**
-     * @return The profile id.
-     */
-    public String getProfileID(){
-        return api.proid;
-    }
-
-    /**
-     * @return The user id.
-     */
-    public String getUserID(){
-        return api.userid;
-    }
-
-    /**
-     * @return The current session id.
-     */
-    public String getSessionID(){
-        return api.sesid;
-    }
-
-    /**
      * @return All the transactions that the account made.
      */
     public List<Transaction> getTransactions(){
-        JsonArray array = JsonParser.parseString(MinehutAPI.request("https://api.minehut.com/", "user/"+api.userid+"/credit/transactions")).getAsJsonObject().getAsJsonArray("transactions");
+        JsonArray array = JsonParser.parseString(MinehutAPI.request("https://api.minehut.com/", "user/"+api.userId+"/credit/transactions")).getAsJsonObject().getAsJsonArray("transactions");
         List<Transaction> transactions = new ArrayList<>();
         for (int i = 0; i < array.size(); i++) {
             JsonObject obj = array.get(i).getAsJsonObject();
@@ -68,7 +43,7 @@ public class Account {
      * @return The information of the account.
      */
     public AccountInfo getInfo(){
-        return new AccountInfo(JsonParser.parseString(MinehutAPI.request("https://api.minehut.com/", "v2/user/" + api.userid)).getAsJsonObject().getAsJsonObject("user"), api);
+        return new AccountInfo(JsonParser.parseString(MinehutAPI.request("https://api.minehut.com/", "v2/user/" + api.userId)).getAsJsonObject().getAsJsonObject("user"), api);
     }
 
     /**
@@ -77,13 +52,13 @@ public class Account {
      * @param platform The platform of the new server.
      */
     public void createServer(String name, String platform){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/servers/create"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"name\":\""+name+"\",\"platform\":\""+platform.toLowerCase() +"\"}"))
                 .build();
@@ -99,8 +74,10 @@ public class Account {
     /**
      * @return The account as a string.
      */
-    public String toString(){
-        return "User: "+getUserID()+" Profile: "+getProfileID();
+    @Override
+    public String toString() {
+        return "Account{" +
+                "api=" + api +
+                '}';
     }
-
 }

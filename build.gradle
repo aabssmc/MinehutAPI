@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-    id 'signing'
-    id 'maven-publish'
 }
 
 
@@ -22,37 +20,9 @@ dependencies {
     implementation 'org.jetbrains:annotations:24.0.0'
 }
 
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
 wrapper {
     gradleVersion = "8.7"
     distributionType = Wrapper.DistributionType.ALL
-}
-
-
-publishing {
-    repositories {
-        maven {
-            name = "OSSRH"
-            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
-            }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/aabssmc/MinehutAPI"
-            credentials {
-                username = System.getenv("GH_ACTOR")
-                password = System.getenv("GH_TOKEN")
-            }
-        }
-    }
 }
 
 def targetJavaVersion = 17
@@ -67,4 +37,22 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }
+}
+
+jar {
+    archiveBaseName.set("${rootProject.name.toLowerCase().replaceAll("api", "")}")
+    archiveVersion.set(version.toString())
+    destinationDirectory.set(file("${rootProject.buildDir}/libs"))
+}
+
+tasks.register('sourcesJar', Jar) {
+    from sourceSets.main.allSource
+    archiveBaseName.set("${rootProject.name.toLowerCase().replaceAll("api", "")}")
+    archiveVersion.set(version.toString())
+    destinationDirectory.set(file("${rootProject.buildDir}/libs"))
+    archiveClassifier.set("sources")
+}
+
+artifacts {
+    archives sourcesJar
 }

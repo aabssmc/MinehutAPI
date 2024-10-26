@@ -9,7 +9,7 @@ public class Transaction {
      * Transaction.
      * @param json The json object
      */
-    public Transaction(JsonObject json) {
+    Transaction(JsonObject json) {
         this.json = json;
     }
 
@@ -84,9 +84,12 @@ public class Transaction {
     }
 
     /**
-     * @return The purchase as a string.
+     * @return The transaction as a string.
      */
-    public String toString(){
-        return "Price: "+getPrice()+" Description: "+getDescription();
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "json=" + json +
+                '}';
     }
 }

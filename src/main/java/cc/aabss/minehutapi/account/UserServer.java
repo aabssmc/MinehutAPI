@@ -14,8 +14,8 @@ import java.net.http.HttpResponse;
  */
 public class UserServer extends Server {
 
-    public UserServer(String id, MinehutAPI api) {
-        super(JsonParser.parseString(MinehutAPI.request("https://api.minehut.com/", "server/" + id)).getAsJsonObject());
+    UserServer(String id, MinehutAPI api) {
+        super(JsonParser.parseString(MinehutAPI.request("https://api.minehut.com/", "server/" + id)).getAsJsonObject(), api.getServers());
         this.api = api;
         this.id = id;
     }
@@ -24,13 +24,13 @@ public class UserServer extends Server {
     private final String id;
 
     public void unhibernate(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/start_service"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -44,13 +44,13 @@ public class UserServer extends Server {
     }
 
     public void start(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/start"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -64,13 +64,13 @@ public class UserServer extends Server {
     }
 
     public void stop(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/shutdown"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -84,13 +84,13 @@ public class UserServer extends Server {
     }
 
     public void hibernate(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/destroy_service"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -104,13 +104,13 @@ public class UserServer extends Server {
     }
 
     public void repairFiles(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/repair_files"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -124,13 +124,13 @@ public class UserServer extends Server {
     }
 
     public void reset(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/reset_all"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -144,13 +144,13 @@ public class UserServer extends Server {
     }
 
     public void sendCommand(String cmd){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/send_command"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"command\":\""+cmd+"\"}"))
                 .build();
@@ -164,13 +164,13 @@ public class UserServer extends Server {
     }
 
     public void setName(String name){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/change_name"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"name\":\""+name+"\"}"))
                 .build();
@@ -184,13 +184,13 @@ public class UserServer extends Server {
     }
 
     public void setMOTD(String motd){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/change_motd"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"name\":\""+motd+"\"}"))
                 .build();
@@ -204,13 +204,13 @@ public class UserServer extends Server {
     }
 
     public void setVisibility(boolean visible){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/visibility"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"visibility\":\""+(visible ? "true" : "false")+"\"}"))
                 .build();
@@ -224,13 +224,13 @@ public class UserServer extends Server {
     }
 
     public void saveWorld(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/save"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -244,13 +244,13 @@ public class UserServer extends Server {
     }
 
     public void resetWorld(){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/reset_world"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -264,13 +264,13 @@ public class UserServer extends Server {
     }
 
     public void editServerProperites(ServerPropertyType field, String value){
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = MinehutAPI.httpClient;
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.minehut.com/server/"+id+"/edit_server_properties"))
                 .header("Authorization", "Bearer " + api.token)
-                .header("X-Profile-Id", api.proid)
-                .header("X-Session-Id", api.sesid)
+                .header("X-Profile-Id", api.profileId)
+                .header("X-Session-Id", api.sessionId)
                 .header("User-Agent", "MinehutAPI-Java-Client")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"field\":\""+field.name().toLowerCase()+"\", \"value\":\""+value+"\"}"))
                 .build();
@@ -281,6 +281,17 @@ public class UserServer extends Server {
             System.out.println("report this to me plz");
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * @return The user server as a string.
+     */
+    @Override
+    public String toString() {
+        return "UserServer{" +
+                "api=" + api +
+                ", id='" + id + '\'' +
+                '}';
     }
 
 

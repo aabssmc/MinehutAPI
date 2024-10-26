@@ -1,11 +1,11 @@
 package cc.aabss.minehutapi.players;
 
+import cc.aabss.minehutapi.network.Network;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import static cc.aabss.minehutapi.MinehutAPI.request;
-import static cc.aabss.minehutapi.players.Friends.formatUUID;
-import static cc.aabss.minehutapi.players.Friends.getUUID;
+import static cc.aabss.minehutapi.players.Players.getUUID;
 
 /**
  * The Rank Class
@@ -99,8 +99,10 @@ public enum Rank {
     DEFAULT(20);
 
     Rank(Integer index) {
-        String req = request("https://api.minehut.com/", "network/ranks");
-        rank = JsonParser.parseString(req).getAsJsonArray().get(index).getAsJsonObject();
+        if (Network.rankList == null) {
+            Network.rankList = JsonParser.parseString(request("https://api.minehut.com/", "network/ranks")).getAsJsonArray();
+        }
+        rank = Network.rankList.get(index).getAsJsonObject();
     }
 
     private final JsonObject rank;
@@ -112,10 +114,10 @@ public enum Rank {
     public static Rank getRank(String NameOrUUID){
         String uuid = "";
         if (NameOrUUID.length() <= 16) {
-            uuid = formatUUID(getUUID(NameOrUUID));
+            uuid = Players.formatUUID(getUUID(NameOrUUID));
         } else {
             if (!NameOrUUID.contains("-")) {
-                uuid = formatUUID(NameOrUUID);
+                uuid = Players.formatUUID(NameOrUUID);
             }
         }
         JsonObject json = JsonParser.parseString(request("https://api.minehut.com/cosmetics/profile/", uuid)).getAsJsonObject();
@@ -218,13 +220,6 @@ public enum Rank {
      */
     public boolean isSubscription(){
         return rank.get("subscription").getAsBoolean();
-    }
-
-    /**
-     * @return Returns the rank as a string.
-     */
-    public String toString(){
-        return getName();
     }
 
 }
